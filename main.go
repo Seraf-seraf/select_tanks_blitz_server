@@ -13,12 +13,14 @@ import (
 
 const hostsFilePath = "C:\\Windows\\System32\\drivers\\etc\\hosts"
 
+const Reset = 4
+
 var servers = map[int]string{
-	0: "login0.tanksblitz.ru",
-	1: "login1.tanksblitz.ru",
-	2: "login2.tanksblitz.ru",
-	3: "login3.tanksblitz.ru",
-	5: "Сбросить настройки",
+	0:     "login0.tanksblitz.ru",
+	1:     "login1.tanksblitz.ru",
+	2:     "login2.tanksblitz.ru",
+	3:     "login3.tanksblitz.ru",
+	Reset: "Сбросить настройки",
 }
 
 func main() {
@@ -28,7 +30,7 @@ func main() {
 	var choice int
 	fmt.Println("Введите номер настройки: ")
 	_, err := fmt.Scanf("%d", &choice)
-	if err != nil || choice < 0 || choice > 5 {
+	if err != nil || choice < 0 || choice > Reset {
 		fmt.Println("Некорректный выбор")
 		return
 	}
@@ -63,7 +65,7 @@ func main() {
 		return
 	}
 
-	if choice == 5 {
+	if choice == Reset {
 		writeToFile(lines)
 		fmt.Println("Настройки сброшены")
 		return
@@ -75,7 +77,7 @@ func main() {
 			continue
 		}
 
-		if key != 5 {
+		if key != Reset {
 			lines = append(lines, "127.0.0.1 "+server)
 		}
 	}
@@ -95,12 +97,7 @@ func printMenu() {
 	sort.Ints(keys)
 
 	for _, key := range keys {
-		if key == 5 {
-			fmt.Printf("%d: %s\n", key, servers[key])
-			continue
-		}
-
-		fmt.Printf("RU_C%d: %s\n", key, servers[key])
+		fmt.Printf("%d: %s\n", key, servers[key])
 	}
 }
 
