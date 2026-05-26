@@ -18,7 +18,6 @@ var servers = map[int]string{
 	1: "login1.tanksblitz.ru",
 	2: "login2.tanksblitz.ru",
 	3: "login3.tanksblitz.ru",
-	4: "login4.tanksblitz.ru",
 	5: "Сбросить настройки",
 }
 
@@ -96,7 +95,12 @@ func printMenu() {
 	sort.Ints(keys)
 
 	for _, key := range keys {
-		fmt.Printf("Сервер %d: %s\n", key, servers[key])
+		if key == 5 {
+			fmt.Printf("%d: %s\n", key, servers[key])
+			continue
+		}
+
+		fmt.Printf("RU_C%d: %s\n", key, servers[key])
 	}
 }
 
